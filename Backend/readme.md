@@ -21,7 +21,7 @@ ________________________________________
 
 ________________________________________
 🗂️ Directory Structure
-
+```
 app/
 ├── main.py                     # Entry point for the FastAPI application
 ├── models.py                   # Pydantic models for request/response validation
@@ -43,13 +43,14 @@ app/
 │   └── db_manager.py           # MongoDB database manager
 └── image_classifier.py         # Image classification logic
 ________________________________________
-
+```
 
 
 
 ⚙️ Setup & Installation
 
-1.	Clone the repository and create a virtual environment:
+1.
+2.	Clone the repository and create a virtual environment:
 bash
 RunCopy code
 1git clone <repo-url>
@@ -57,18 +58,18 @@ RunCopy code
 3python -m venv venv
 4source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-2.	Install dependencies:
+3.	Install dependencies:
 bash
 RunCopy code
 1pip install -r requirements.txt
 
-3.	Set up environment variables: Create a .env file in the backend directory with the following:
+4.	Set up environment variables: Create a .env file in the backend directory with the following:
 RunCopy code
 1MONGO_URI=mongodb://localhost:27017
 2VIRUSTOTAL_API_KEY=<your_vt_key>
 3ABUSEIPDB_API_KEY=<your_abuseipdb_key>
 
-4.	Run the server:
+5.	Run the server:
 bash
 RunCopy code
 1uvicorn app.main:app --reload
