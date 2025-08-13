@@ -41,14 +41,6 @@
         "documentation": {}
     },
     {
-        "label": "Optional",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
         "label": "Dict",
         "importPath": "typing",
         "description": "typing",
@@ -201,6 +193,22 @@
         "documentation": {}
     },
     {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "Dict",
         "importPath": "typing",
         "description": "typing",
@@ -286,15 +294,6 @@
         "description": "typing",
         "isExtraImport": true,
         "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
         "documentation": {}
     },
     {
@@ -986,6 +985,15 @@
         "documentation": {}
     },
     {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
         "label": "AccessibilityScanner",
         "kind": 6,
         "importPath": "Backend.app.analyzer.accessibility_scanner",
@@ -999,7 +1007,7 @@
         "kind": 2,
         "importPath": "Backend.app.analyzer.ai_utils",
         "description": "Backend.app.analyzer.ai_utils",
-        "peekOfCode": "def gen_anomaly_summary(anomalies: List[Dict]) -> str:\n    \"\"\"\n    Produce a high-level summary for a list of anomalies.\n    Keeps the previous behavior but adds error handling and graceful fallback.\n    \"\"\"\n    try:\n        if hasattr(assistant, \"summarize_anomalies\"):\n            return assistant.summarize_anomalies(anomalies)\n        # fallback: create a simple human summary if assistant lacks that convenience method\n        lines = []",
+        "peekOfCode": "def gen_anomaly_summary(anomalies: List[Dict]) -> str:\n    \"\"\"\n    Calls the assistant's summarize_anomalies method directly.\n    \"\"\"\n    try:\n        return assistant.summarize_anomalies(anomalies)\n    except Exception as e:\n        logger.error(f\"Error in gen_anomaly_summary: {e}\")\n        return \"Could not generate AI summary.\"\ndef gen_fix_snippet(anomaly: Dict) -> str:",
         "detail": "Backend.app.analyzer.ai_utils",
         "documentation": {}
     },
@@ -1008,7 +1016,7 @@
         "kind": 2,
         "importPath": "Backend.app.analyzer.ai_utils",
         "description": "Backend.app.analyzer.ai_utils",
-        "peekOfCode": "def gen_fix_snippet(anomaly: Dict) -> str:\n    \"\"\"\n    Generate a concise, actionable recommendation for a single anomaly by requesting\n    a structured JSON object from the model.\n    \"\"\"\n    # Defensive defaults for creating the prompt\n    issue_type = anomaly.get(\"type\", \"unknown\")\n    severity = anomaly.get(\"severity\", \"unknown\")\n    message = anomaly.get(\"message\", anomaly.get(\"description\", \"No description provided.\"))\n    prompt = (",
+        "peekOfCode": "def gen_fix_snippet(anomaly: Dict) -> str:\n    \"\"\"\n    Calls the assistant's generate_fix_suggestion method directly,\n    passing the anomaly dictionary as expected.\n    \"\"\"\n    try:\n        return assistant.generate_fix_suggestion(anomaly)\n    except Exception as e:\n        logger.error(f\"Error in gen_fix_snippet: {e}\")\n        # Provide a safe fallback using the rule-based recommendation",
         "detail": "Backend.app.analyzer.ai_utils",
         "documentation": {}
     },
@@ -1017,7 +1025,7 @@
         "kind": 5,
         "importPath": "Backend.app.analyzer.ai_utils",
         "description": "Backend.app.analyzer.ai_utils",
-        "peekOfCode": "logger = logging.getLogger(__name__)\nlogger.setLevel(logging.INFO)\n# Assistant initialization (tweak model_name / params as needed)\nassistant = AIAssistant(model_name=\"google/flan-t5-base\")\ndef _call_assistant_with_fallback(prompt: str) -> str:\n    \"\"\"\n    Attempt to call the assistant using several likely method names.\n    This keeps compatibility across small API differences in AIAssistant.\n    \"\"\"\n    candidate_methods = [",
+        "peekOfCode": "logger = logging.getLogger(__name__)\n# Initialize the assistant as before.\nassistant = AIAssistant(model_name=\"google/flan-t5-base\") \ndef gen_anomaly_summary(anomalies: List[Dict]) -> str:\n    \"\"\"\n    Calls the assistant's summarize_anomalies method directly.\n    \"\"\"\n    try:\n        return assistant.summarize_anomalies(anomalies)\n    except Exception as e:",
         "detail": "Backend.app.analyzer.ai_utils",
         "documentation": {}
     },
@@ -1026,7 +1034,7 @@
         "kind": 5,
         "importPath": "Backend.app.analyzer.ai_utils",
         "description": "Backend.app.analyzer.ai_utils",
-        "peekOfCode": "assistant = AIAssistant(model_name=\"google/flan-t5-base\")\ndef _call_assistant_with_fallback(prompt: str) -> str:\n    \"\"\"\n    Attempt to call the assistant using several likely method names.\n    This keeps compatibility across small API differences in AIAssistant.\n    \"\"\"\n    candidate_methods = [\n        \"generate_fix_suggestion\",  # your current hint\n        \"generate_text\",\n        \"ask\",",
+        "peekOfCode": "assistant = AIAssistant(model_name=\"google/flan-t5-base\") \ndef gen_anomaly_summary(anomalies: List[Dict]) -> str:\n    \"\"\"\n    Calls the assistant's summarize_anomalies method directly.\n    \"\"\"\n    try:\n        return assistant.summarize_anomalies(anomalies)\n    except Exception as e:\n        logger.error(f\"Error in gen_anomaly_summary: {e}\")\n        return \"Could not generate AI summary.\"",
         "detail": "Backend.app.analyzer.ai_utils",
         "documentation": {}
     },
@@ -1233,7 +1241,7 @@
         "kind": 6,
         "importPath": "Backend.app.genai.ai_assistant",
         "description": "Backend.app.genai.ai_assistant",
-        "peekOfCode": "class AIAssistant:\n    def __init__(self, model_name=\"google/flan-t5-small\"):  # <- better default\n        self.device = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\n        self.tokenizer = T5Tokenizer.from_pretrained(model_name)\n        self.model = T5ForConditionalGeneration.from_pretrained(model_name).to(self.device)\n    def generate_fix_suggestion(self, anomaly: dict) -> str:\n        try:\n            required_keys = {\"type\", \"message\", \"severity\"}\n            if not required_keys.issubset(anomaly.keys()):\n                return \"Invalid anomaly format.\"",
+        "peekOfCode": "class AIAssistant:\n    def __init__(self, model_name=\"google/flan-t5-base\"):  # Using 'base' for better quality\n        self.device = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\n        self.tokenizer = T5Tokenizer.from_pretrained(model_name)\n        self.model = T5ForConditionalGeneration.from_pretrained(model_name).to(self.device)\n    def generate_fix_suggestion(self, anomaly: Dict) -> str:\n        \"\"\"\n        Generates a high-quality, actionable recommendation for a single anomaly\n        by creating a detailed and explicit prompt for the AI model.\n        \"\"\"",
         "detail": "Backend.app.genai.ai_assistant",
         "documentation": {}
     },
