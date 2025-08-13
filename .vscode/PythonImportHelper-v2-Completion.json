@@ -1345,7 +1345,7 @@
         "kind": 6,
         "importPath": "Backend.app.models",
         "description": "Backend.app.models",
-        "peekOfCode": "class AnalyzeRequest(BaseModel):\n    url: str\nclass SEOMetadata(BaseModel):\n    title:             Optional[str] = None\n    meta_description:  Optional[str] = None\n    canonical:         Optional[str] = None\n    h1_count:          Optional[int] = None\nclass ThreatIntelVT(BaseModel):\n    category:        str\n    malicious_count: int",
+        "peekOfCode": "class AnalyzeRequest(BaseModel):\n    url: str\nclass SEOMetadata(BaseModel):\n    title:             Optional[str] = None\n    meta_description:  Optional[str] = None\n    canonical:         Optional[str] = None\n    h1_count:          Optional[int] = None\nclass ThreatIntelVT(BaseModel):\n    category:        Optional[str] = None\n    malicious_count: Optional[int] = None",
         "detail": "Backend.app.models",
         "documentation": {}
     },
@@ -1354,7 +1354,7 @@
         "kind": 6,
         "importPath": "Backend.app.models",
         "description": "Backend.app.models",
-        "peekOfCode": "class SEOMetadata(BaseModel):\n    title:             Optional[str] = None\n    meta_description:  Optional[str] = None\n    canonical:         Optional[str] = None\n    h1_count:          Optional[int] = None\nclass ThreatIntelVT(BaseModel):\n    category:        str\n    malicious_count: int\n    total_engines:   int\n    vt_score:        int",
+        "peekOfCode": "class SEOMetadata(BaseModel):\n    title:             Optional[str] = None\n    meta_description:  Optional[str] = None\n    canonical:         Optional[str] = None\n    h1_count:          Optional[int] = None\nclass ThreatIntelVT(BaseModel):\n    category:        Optional[str] = None\n    malicious_count: Optional[int] = None\n    total_engines:   Optional[int] = None\n    vt_score:        Optional[int] = None",
         "detail": "Backend.app.models",
         "documentation": {}
     },
@@ -1363,7 +1363,7 @@
         "kind": 6,
         "importPath": "Backend.app.models",
         "description": "Backend.app.models",
-        "peekOfCode": "class ThreatIntelVT(BaseModel):\n    category:        str\n    malicious_count: int\n    total_engines:   int\n    vt_score:        int\n    last_analysis:   Optional[datetime] = None\n    flagged_engines: Optional[List[str]] = None\nclass ThreatIntelAbuse(BaseModel):\n    category:        str\n    confidenceScore: int",
+        "peekOfCode": "class ThreatIntelVT(BaseModel):\n    category:        Optional[str] = None\n    malicious_count: Optional[int] = None\n    total_engines:   Optional[int] = None\n    vt_score:        Optional[int] = None\n    last_analysis:   Optional[datetime] = None\n    flagged_engines: Optional[List[str]] = None\nclass ThreatIntelAbuse(BaseModel):\n    category:        str\n    confidenceScore: int",
         "detail": "Backend.app.models",
         "documentation": {}
     },
@@ -1381,7 +1381,7 @@
         "kind": 6,
         "importPath": "Backend.app.models",
         "description": "Backend.app.models",
-        "peekOfCode": "class ThreatIntel(BaseModel):\n    virustotal:   ThreatIntelVT\n    abuse_ip_db:  ThreatIntelAbuse\n    combined_score: float\nclass ScanComparison(BaseModel):\n    new_issues:        List[str]\n    resolved_issues:   List[str]\n    persistent_issues: List[str]\n    risk_score_change: Optional[int] = None\nclass AnalyzeResponse(BaseModel):",
+        "peekOfCode": "class ThreatIntel(BaseModel):\n    virustotal:   Optional[ThreatIntelVT] = None\n    abuse_ip_db:  Optional[ThreatIntelAbuse] = None\n    combined_score: float\nclass ScanComparison(BaseModel):\n    new_issues:        List[str]\n    resolved_issues:   List[str]\n    persistent_issues: List[str]\n    risk_score_change: Optional[int] = None\nclass AnalyzeResponse(BaseModel):",
         "detail": "Backend.app.models",
         "documentation": {}
     },

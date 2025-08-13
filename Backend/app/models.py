@@ -24,10 +24,10 @@ class SEOMetadata(BaseModel):
     h1_count:          Optional[int] = None
 
 class ThreatIntelVT(BaseModel):
-    category:        str
-    malicious_count: int
-    total_engines:   int
-    vt_score:        int
+    category:        Optional[str] = None
+    malicious_count: Optional[int] = None
+    total_engines:   Optional[int] = None
+    vt_score:        Optional[int] = None
     last_analysis:   Optional[datetime] = None
     flagged_engines: Optional[List[str]] = None
 
@@ -47,8 +47,8 @@ class ThreatIntelAbuse(BaseModel):
     reports:         Optional[List[Dict[str, Any]]] = None
 
 class ThreatIntel(BaseModel):
-    virustotal:   ThreatIntelVT
-    abuse_ip_db:  ThreatIntelAbuse
+    virustotal:   Optional[ThreatIntelVT] = None
+    abuse_ip_db:  Optional[ThreatIntelAbuse] = None
     combined_score: float
 
 class ScanComparison(BaseModel):

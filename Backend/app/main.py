@@ -168,6 +168,8 @@ async def analyze_website(request: Request, payload: AnalyzeRequest):
         ThreatIntelScanner.check_virustotal(domain),
         ThreatIntelScanner.check_abuse_ip(ip) if ip else {"category": "unknown", "confidenceScore": 0}
     )
+    vt_result = vt_result or None
+    abuse_result = abuse_result or None
     ti_score = compute_threat_score(vt_result, abuse_result)
     threat_intel = {
         "virustotal": vt_result,
