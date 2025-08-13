@@ -226,7 +226,7 @@
         "documentation": {}
     },
     {
-        "label": "Optional",
+        "label": "Dict",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -234,7 +234,7 @@
         "documentation": {}
     },
     {
-        "label": "Dict",
+        "label": "Any",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -518,22 +518,6 @@
         "documentation": {}
     },
     {
-        "label": "ThreatIntelScanner",
-        "importPath": "app.analyzer.threat_intel",
-        "description": "app.analyzer.threat_intel",
-        "isExtraImport": true,
-        "detail": "app.analyzer.threat_intel",
-        "documentation": {}
-    },
-    {
-        "label": "compute_threat_score",
-        "importPath": "app.analyzer.threat_intel",
-        "description": "app.analyzer.threat_intel",
-        "isExtraImport": true,
-        "detail": "app.analyzer.threat_intel",
-        "documentation": {}
-    },
-    {
         "label": "RiskModel",
         "importPath": "app.ml.risk_model",
         "description": "app.ml.risk_model",
@@ -712,15 +696,6 @@
         "documentation": {}
     },
     {
-        "label": "socket",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "socket",
-        "description": "socket",
-        "detail": "socket",
-        "documentation": {}
-    },
-    {
         "label": "StaticFiles",
         "importPath": "fastapi.staticfiles",
         "description": "fastapi.staticfiles",
@@ -833,14 +808,6 @@
         "documentation": {}
     },
     {
-        "label": "summarize_anomalies",
-        "importPath": "app.analyzer.nlp_utils",
-        "description": "app.analyzer.nlp_utils",
-        "isExtraImport": true,
-        "detail": "app.analyzer.nlp_utils",
-        "documentation": {}
-    },
-    {
         "label": "classify_screenshot",
         "importPath": "app.image_classifier",
         "description": "app.image_classifier",
@@ -862,6 +829,46 @@
         "description": "app.analyzer.utils",
         "isExtraImport": true,
         "detail": "app.analyzer.utils",
+        "documentation": {}
+    },
+    {
+        "label": "SEOScanner",
+        "importPath": "app.analyzer.seo_scanner",
+        "description": "app.analyzer.seo_scanner",
+        "isExtraImport": true,
+        "detail": "app.analyzer.seo_scanner",
+        "documentation": {}
+    },
+    {
+        "label": "SEOScanner",
+        "importPath": "app.analyzer.seo_scanner",
+        "description": "app.analyzer.seo_scanner",
+        "isExtraImport": true,
+        "detail": "app.analyzer.seo_scanner",
+        "documentation": {}
+    },
+    {
+        "label": "AccessibilityScanner",
+        "importPath": "app.analyzer.accessibility_scanner",
+        "description": "app.analyzer.accessibility_scanner",
+        "isExtraImport": true,
+        "detail": "app.analyzer.accessibility_scanner",
+        "documentation": {}
+    },
+    {
+        "label": "gen_anomaly_summary",
+        "importPath": "app.analyzer.ai_utils",
+        "description": "app.analyzer.ai_utils",
+        "isExtraImport": true,
+        "detail": "app.analyzer.ai_utils",
+        "documentation": {}
+    },
+    {
+        "label": "gen_fix_snippet",
+        "importPath": "app.analyzer.ai_utils",
+        "description": "app.analyzer.ai_utils",
+        "isExtraImport": true,
+        "detail": "app.analyzer.ai_utils",
         "documentation": {}
     },
     {
@@ -905,51 +912,11 @@
         "documentation": {}
     },
     {
-        "label": "ThreatIntel",
-        "importPath": "app.models",
-        "description": "app.models",
+        "label": "get_risk_level",
+        "importPath": "app.config",
+        "description": "app.config",
         "isExtraImport": true,
-        "detail": "app.models",
-        "documentation": {}
-    },
-    {
-        "label": "SEOScanner",
-        "importPath": "app.analyzer.seo_scanner",
-        "description": "app.analyzer.seo_scanner",
-        "isExtraImport": true,
-        "detail": "app.analyzer.seo_scanner",
-        "documentation": {}
-    },
-    {
-        "label": "SEOScanner",
-        "importPath": "app.analyzer.seo_scanner",
-        "description": "app.analyzer.seo_scanner",
-        "isExtraImport": true,
-        "detail": "app.analyzer.seo_scanner",
-        "documentation": {}
-    },
-    {
-        "label": "AccessibilityScanner",
-        "importPath": "app.analyzer.accessibility_scanner",
-        "description": "app.analyzer.accessibility_scanner",
-        "isExtraImport": true,
-        "detail": "app.analyzer.accessibility_scanner",
-        "documentation": {}
-    },
-    {
-        "label": "gen_anomaly_summary",
-        "importPath": "app.analyzer.ai_utils",
-        "description": "app.analyzer.ai_utils",
-        "isExtraImport": true,
-        "detail": "app.analyzer.ai_utils",
-        "documentation": {}
-    },
-    {
-        "label": "gen_fix_snippet",
-        "importPath": "app.analyzer.ai_utils",
-        "description": "app.analyzer.ai_utils",
-        "isExtraImport": true,
-        "detail": "app.analyzer.ai_utils",
+        "detail": "app.config",
         "documentation": {}
     },
     {
@@ -1315,16 +1282,34 @@
         "kind": 2,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "def normalize_url(url: str) -> str:\n    p = urlparse(url)\n    if not p.scheme:\n        return f\"https://{url}\"\n    return url\n@app.post(\"/analyze\", response_model=ExtendedAnalyzeResponse)\n@limiter.limit(\"5/minute\")\nasync def analyze_website(request: Request, payload: AnalyzeRequest):\n    url = normalize_url(payload.url)\n    logger.info(f\"Starting analysis for URL: {url}\")",
+        "peekOfCode": "def normalize_url(url: str) -> str:\n    \"\"\"Ensures a URL has a scheme (defaults to https).\"\"\"\n    parsed = urlparse(url)\n    if not parsed.scheme:\n        return f\"https://{url}\"\n    return url\ndef run_scanners(fetched_data: Dict[str, Any]) -> List[Dict[str, Any]]:\n    \"\"\"Runs all individual scanners and returns a combined list of anomalies.\"\"\"\n    anomalies = []\n    # Run each scanner and extend the main anomalies list.",
         "detail": "Backend.app.main",
         "documentation": {}
     },
     {
-        "label": "app",
-        "kind": 5,
+        "label": "run_scanners",
+        "kind": 2,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "app = FastAPI(\n    title=\"Website Anomaly Detector\",\n    description=\"API for detecting security and performance anomalies in websites\",\n    version=\"1.0.0\"\n)\n# CORS (so your React/Vite app can call /analyze)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # tighten in prod!\n    allow_credentials=True,",
+        "peekOfCode": "def run_scanners(fetched_data: Dict[str, Any]) -> List[Dict[str, Any]]:\n    \"\"\"Runs all individual scanners and returns a combined list of anomalies.\"\"\"\n    anomalies = []\n    # Run each scanner and extend the main anomalies list.\n    security_results = SecurityChecker.check_security(fetched_data[\"headers\"])\n    anomalies.extend(security_results[\"anomalies\"])\n    anomalies.extend(PerformanceMonitor.check_performance(fetched_data[\"response_time\"]))\n    anomalies.extend(MalwareScanner.scan_for_malware(fetched_data[\"html\"]))\n    seo_issues, _ = SEOScanner.scan(fetched_data[\"html\"], fetched_data[\"url\"])\n    anomalies.extend(seo_issues)",
+        "detail": "Backend.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "consolidate_anomalies",
+        "kind": 2,
+        "importPath": "Backend.app.main",
+        "description": "Backend.app.main",
+        "peekOfCode": "def consolidate_anomalies(anomalies: List[Dict[str, Any]]) -> List[Dict[str, Any]]:\n    \"\"\"Groups identical anomaly messages into a single entry with a count.\"\"\"\n    message_counts = {}\n    # Use a list to preserve the original anomaly objects\n    processed_anomalies = []\n    for anomaly in anomalies:\n        msg = anomaly.get(\"message\", \"\")\n        if msg in message_counts:\n            # Increment the count for an existing message\n            message_counts[msg]['count'] += 1",
+        "detail": "Backend.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_risk_features",
+        "kind": 2,
+        "importPath": "Backend.app.main",
+        "description": "Backend.app.main",
+        "peekOfCode": "def calculate_risk_features(anomalies: List[Dict[str, Any]], fetched_data: Dict[str, Any]) -> Dict[str, float]:\n    \"\"\"Prepares the feature dictionary for the risk prediction model.\"\"\"\n    security_count = sum(1 for a in anomalies if a.get(\"type\") == \"security\")\n    performance_count = sum(1 for a in anomalies if a.get(\"type\") == \"performance\")\n    sev_map = {\"low\": 1, \"medium\": 2, \"high\": 3, \"critical\": 4}\n    total_severity = sum(sev_map.get(a.get(\"severity\", \"low\"), 1) for a in anomalies)\n    avg_severity = total_severity / max(len(anomalies), 1)\n    page_stats = fetched_data.get(\"html_stats\", {})\n    return {\n        \"security_count\": float(security_count),",
         "detail": "Backend.app.main",
         "documentation": {}
     },
@@ -1333,7 +1318,16 @@
         "kind": 5,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "logger = logging.getLogger(__name__)\nlimiter = Limiter(key_func=get_remote_address)\napp.state.limiter = limiter\napp.add_exception_handler(429, _rate_limit_exceeded_handler)\napp.add_middleware(SlowAPIMiddleware)\ndef normalize_url(url: str) -> str:\n    p = urlparse(url)\n    if not p.scheme:\n        return f\"https://{url}\"\n    return url",
+        "peekOfCode": "logger = logging.getLogger(__name__)\n# Windows asyncio policy for compatibility.\nif sys.platform.startswith(\"win\"):\n    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())\napp = FastAPI(\n    title=\"GuardianWeb Health Analyzer\",\n    description=\"An advanced API for comprehensive website health analysis.\",\n    version=\"1.1.0\"\n)\napp.add_middleware(",
+        "detail": "Backend.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "Backend.app.main",
+        "description": "Backend.app.main",
+        "peekOfCode": "app = FastAPI(\n    title=\"GuardianWeb Health Analyzer\",\n    description=\"An advanced API for comprehensive website health analysis.\",\n    version=\"1.1.0\"\n)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # In production, restrict this to your frontend's domain.\n    allow_credentials=True,\n    allow_methods=[\"*\"],",
         "detail": "Backend.app.main",
         "documentation": {}
     },
@@ -1342,7 +1336,7 @@
         "kind": 5,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "limiter = Limiter(key_func=get_remote_address)\napp.state.limiter = limiter\napp.add_exception_handler(429, _rate_limit_exceeded_handler)\napp.add_middleware(SlowAPIMiddleware)\ndef normalize_url(url: str) -> str:\n    p = urlparse(url)\n    if not p.scheme:\n        return f\"https://{url}\"\n    return url\n@app.post(\"/analyze\", response_model=ExtendedAnalyzeResponse)",
+        "peekOfCode": "limiter = Limiter(key_func=get_remote_address)\napp.state.limiter = limiter\napp.add_exception_handler(429, _rate_limit_exceeded_handler)\napp.add_middleware(SlowAPIMiddleware)\n# --- Helper Functions for Analysis ---\n# The main logic is broken down into smaller, single-responsibility functions.\ndef normalize_url(url: str) -> str:\n    \"\"\"Ensures a URL has a scheme (defaults to https).\"\"\"\n    parsed = urlparse(url)\n    if not parsed.scheme:",
         "detail": "Backend.app.main",
         "documentation": {}
     },
@@ -1351,7 +1345,7 @@
         "kind": 5,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "app.state.limiter = limiter\napp.add_exception_handler(429, _rate_limit_exceeded_handler)\napp.add_middleware(SlowAPIMiddleware)\ndef normalize_url(url: str) -> str:\n    p = urlparse(url)\n    if not p.scheme:\n        return f\"https://{url}\"\n    return url\n@app.post(\"/analyze\", response_model=ExtendedAnalyzeResponse)\n@limiter.limit(\"5/minute\")",
+        "peekOfCode": "app.state.limiter = limiter\napp.add_exception_handler(429, _rate_limit_exceeded_handler)\napp.add_middleware(SlowAPIMiddleware)\n# --- Helper Functions for Analysis ---\n# The main logic is broken down into smaller, single-responsibility functions.\ndef normalize_url(url: str) -> str:\n    \"\"\"Ensures a URL has a scheme (defaults to https).\"\"\"\n    parsed = urlparse(url)\n    if not parsed.scheme:\n        return f\"https://{url}\"",
         "detail": "Backend.app.main",
         "documentation": {}
     },
