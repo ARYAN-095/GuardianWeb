@@ -1153,7 +1153,7 @@
         "kind": 6,
         "importPath": "Backend.app.analyzer.security_checker",
         "description": "Backend.app.analyzer.security_checker",
-        "peekOfCode": "class SecurityChecker:\n    # Required security headers and recommendations\n    REQUIRED_HEADERS = {\n        \"Content-Security-Policy\": {\n            \"severity\": \"high\",\n            \"recommendation\": \"Implement Content-Security-Policy to prevent XSS attacks.\"\n        },\n        \"X-Frame-Options\": {\n            \"severity\": \"medium\",\n            \"recommendation\": \"Add X-Frame-Options to protect against clickjacking.\"",
+        "peekOfCode": "class SecurityChecker:\n    # Updated the structure to include an 'aliases' key.\n    # This allows the checker to recognize common alternative headers.\n    REQUIRED_HEADERS = {\n        \"Content-Security-Policy\": {\n            \"severity\": \"high\",\n            \"recommendation\": \"Implement a Content-Security-Policy (CSP) to prevent XSS and other injection attacks.\",\n            \"aliases\": [\"content-security-policy-report-only\"] # Recognizes the \"report-only\" version\n        },\n        \"Strict-Transport-Security\": {",
         "detail": "Backend.app.analyzer.security_checker",
         "documentation": {}
     },
