@@ -242,6 +242,14 @@
         "documentation": {}
     },
     {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "Any",
         "importPath": "typing",
         "description": "typing",
@@ -1239,6 +1247,15 @@
         "description": "Backend.app.routes.training",
         "peekOfCode": "model = RiskModel()\n@router.post(\"/train\")\nasync def train_model():\n    results = await model.train()\n    return {\n        \"status\": \"training_complete\",\n        \"model_performance\": results\n    }",
         "detail": "Backend.app.routes.training",
+        "documentation": {}
+    },
+    {
+        "label": "get_risk_level",
+        "kind": 2,
+        "importPath": "Backend.app.config",
+        "description": "Backend.app.config",
+        "peekOfCode": "def get_risk_level(score: int) -> str:\n    \"\"\"Determines the risk level string based on a numeric score.\"\"\"\n    if score >= 90:\n        return \"low\"\n    elif score >= 70:\n        return \"medium\"\n    elif score >= 50:\n        return \"high\"\n    else:\n        return \"critical\"",
+        "detail": "Backend.app.config",
         "documentation": {}
     },
     {
