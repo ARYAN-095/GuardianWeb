@@ -1,60 +1,88 @@
 # app/genai/ai_assistant.py
 
-from transformers import T5ForConditionalGeneration, T5Tokenizer
-import torch
+import httpx
+import json
+import os
 from typing import List, Dict
 
-class AIAssistant:
-    def __init__(self, model_name="google/flan-t5-base"):  # Using 'base' for better quality
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.tokenizer = T5Tokenizer.from_pretrained(model_name)
-        self.model = T5ForConditionalGeneration.from_pretrained(model_name).to(self.device)
+# It's a good practice to get the API key from an environment variable.
+# For this example, we will leave it blank as it will be handled by the environment.
+API_KEY = "AIzaSyBTlTXscBzQsA6S4BCnGyVq1d1VezwD1Ok"
 
-    def generate_fix_suggestion(self, anomaly: Dict) -> str:
+class AIAssistant:
+    """
+    An assistant that uses the powerful, cloud-based Gemini API to generate
+    high-quality text for summaries and recommendations.
+    """
+    def __init__(self, model_name="gemini-2.5-flash-preview-05-20"):
+        self.model_name = model_name
+        self.api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model_name}:generateContent?key={API_KEY}"
+
+    async def _generate_response(self, prompt: str) -> str:
         """
-        Generates a high-quality, actionable recommendation for a single anomaly
-        by creating a detailed and explicit prompt for the AI model.
+        A helper function to send a prompt to the Gemini API and get a response.
+        This is now an async function to work well with FastAPI.
+        """
+        payload = {
+            "contents": [{
+                "parts": [{"text": prompt}]
+            }]
+        }
+        
+        async with httpx.AsyncClient() as client:
+            try:
+                response = await client.post(self.api_url, json=payload, timeout=30.0)
+                response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+                
+                result = response.json()
+                
+                # Safely navigate the response structure to get the text
+                candidates = result.get("candidates", [])
+                if candidates and "content" in candidates[0] and "parts" in candidates[0]["content"]:
+                    parts = candidates[0]["content"]["parts"]
+                    if parts and "text" in parts[0]:
+                        return parts[0]["text"].strip()
+                
+                # If the expected structure is not found, return a diagnostic message
+                return f"Unexpected API response format: {json.dumps(result)}"
+
+            except httpx.HTTPStatusError as e:
+                return f"API request failed with status {e.response.status_code}: {e.response.text}"
+            except Exception as e:
+                return f"An unexpected error occurred: {str(e)}"
+
+    async def generate_fix_suggestion(self, anomaly: Dict) -> str:
+        """
+        Generates a recommendation using a prompt optimized for the Gemini API.
         """
         try:
-            # Create a detailed, structured prompt for the AI.
             prompt = (
-                "You are a web security expert providing a recommendation. "
-                f"An audit found an issue with type '{anomaly.get('type', 'N/A')}' "
-                f"and severity '{anomaly.get('severity', 'N/A')}'. "
-                f"The issue is: \"{anomaly.get('message', 'N/A')}\". "
-                "Provide a single, concise sentence explaining how to fix this."
+                f"You are a web security expert. A website audit found this issue: "
+                f"\"{anomaly.get('message', 'N/A')}\". "
+                f"Provide a concise, one-sentence recommendation for how to fix it."
             )
-            
-            input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids.to(self.device)
-            # Adjust max_length for a concise recommendation
-            output_ids = self.model.generate(input_ids, max_length=100, num_beams=4, early_stopping=True)
-            
-            return self.tokenizer.decode(output_ids[0], skip_special_tokens=True).strip()
+            return await self._generate_response(prompt)
         except Exception as e:
             return f"Unable to generate fix: {str(e)}"
 
-    def summarize_anomalies(self, anomalies: List[Dict]) -> str:
+    async def summarize_anomalies(self, anomalies: List[Dict]) -> str:
         """
-        Generates a high-level summary for a list of anomalies using an improved prompt.
+        Generates a summary using a prompt optimized for the Gemini API.
         """
         try:
             if not anomalies:
                 return "No significant anomalies were detected."
 
-            # Create a clear summary of the issues to feed to the model
-            issue_descriptions = ". ".join(
-                [f"{a['message']}" for a in anomalies if 'message' in a]
+            issue_list = "\n".join(
+                f"- {a['message']}" for a in anomalies if 'message' in a
             )
             
             prompt = (
-                "Summarize the following website health issues in one clear and helpful sentence: "
-                f"\"{issue_descriptions}\""
+                "Summarize the following website health issues in one helpful sentence:\n"
+                f"{issue_list}"
             )
             
-            input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids.to(self.device)
-            output_ids = self.model.generate(input_ids, max_length=150, num_beams=4, early_stopping=True)
-            
-            return self.tokenizer.decode(output_ids[0], skip_special_tokens=True).strip()
+            return await self._generate_response(prompt)
         except Exception as e:
             return f"Summary generation failed: {str(e)}"
 

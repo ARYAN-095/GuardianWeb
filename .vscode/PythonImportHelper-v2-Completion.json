@@ -305,6 +305,14 @@
         "documentation": {}
     },
     {
+        "label": "AIAssistant",
+        "importPath": "app.genai.ai_assistant",
+        "description": "app.genai.ai_assistant",
+        "isExtraImport": true,
+        "detail": "app.genai.ai_assistant",
+        "documentation": {}
+    },
+    {
         "label": "difflib",
         "kind": 6,
         "isExtraImport": true,
@@ -418,22 +426,6 @@
     },
     {
         "label": "pipeline",
-        "importPath": "transformers",
-        "description": "transformers",
-        "isExtraImport": true,
-        "detail": "transformers",
-        "documentation": {}
-    },
-    {
-        "label": "T5ForConditionalGeneration",
-        "importPath": "transformers",
-        "description": "transformers",
-        "isExtraImport": true,
-        "detail": "transformers",
-        "documentation": {}
-    },
-    {
-        "label": "T5Tokenizer",
         "importPath": "transformers",
         "description": "transformers",
         "isExtraImport": true,
@@ -623,12 +615,12 @@
         "documentation": {}
     },
     {
-        "label": "torch",
+        "label": "json",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "torch",
-        "description": "torch",
-        "detail": "torch",
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
         "documentation": {}
     },
     {
@@ -733,6 +725,15 @@
         "description": "PIL",
         "isExtraImport": true,
         "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "torch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
         "documentation": {}
     },
     {
@@ -896,22 +897,6 @@
         "documentation": {}
     },
     {
-        "label": "gen_anomaly_summary",
-        "importPath": "app.analyzer.ai_utils",
-        "description": "app.analyzer.ai_utils",
-        "isExtraImport": true,
-        "detail": "app.analyzer.ai_utils",
-        "documentation": {}
-    },
-    {
-        "label": "gen_fix_snippet",
-        "importPath": "app.analyzer.ai_utils",
-        "description": "app.analyzer.ai_utils",
-        "isExtraImport": true,
-        "detail": "app.analyzer.ai_utils",
-        "documentation": {}
-    },
-    {
         "label": "AnalyzeRequest",
         "importPath": "app.models",
         "description": "app.models",
@@ -982,15 +967,6 @@
         "importPath": "pytest",
         "description": "pytest",
         "detail": "pytest",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
         "documentation": {}
     },
     {
@@ -1241,7 +1217,16 @@
         "kind": 6,
         "importPath": "Backend.app.genai.ai_assistant",
         "description": "Backend.app.genai.ai_assistant",
-        "peekOfCode": "class AIAssistant:\n    def __init__(self, model_name=\"google/flan-t5-base\"):  # Using 'base' for better quality\n        self.device = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\n        self.tokenizer = T5Tokenizer.from_pretrained(model_name)\n        self.model = T5ForConditionalGeneration.from_pretrained(model_name).to(self.device)\n    def generate_fix_suggestion(self, anomaly: Dict) -> str:\n        \"\"\"\n        Generates a high-quality, actionable recommendation for a single anomaly\n        by creating a detailed and explicit prompt for the AI model.\n        \"\"\"",
+        "peekOfCode": "class AIAssistant:\n    \"\"\"\n    An assistant that uses the powerful, cloud-based Gemini API to generate\n    high-quality text for summaries and recommendations.\n    \"\"\"\n    def __init__(self, model_name=\"gemini-2.5-flash-preview-05-20\"):\n        self.model_name = model_name\n        self.api_url = f\"https://generativelanguage.googleapis.com/v1beta/models/{self.model_name}:generateContent?key={API_KEY}\"\n    async def _generate_response(self, prompt: str) -> str:\n        \"\"\"",
+        "detail": "Backend.app.genai.ai_assistant",
+        "documentation": {}
+    },
+    {
+        "label": "API_KEY",
+        "kind": 5,
+        "importPath": "Backend.app.genai.ai_assistant",
+        "description": "Backend.app.genai.ai_assistant",
+        "peekOfCode": "API_KEY = \"AIzaSyBTlTXscBzQsA6S4BCnGyVq1d1VezwD1Ok\"\nclass AIAssistant:\n    \"\"\"\n    An assistant that uses the powerful, cloud-based Gemini API to generate\n    high-quality text for summaries and recommendations.\n    \"\"\"\n    def __init__(self, model_name=\"gemini-2.5-flash-preview-05-20\"):\n        self.model_name = model_name\n        self.api_url = f\"https://generativelanguage.googleapis.com/v1beta/models/{self.model_name}:generateContent?key={API_KEY}\"\n    async def _generate_response(self, prompt: str) -> str:",
         "detail": "Backend.app.genai.ai_assistant",
         "documentation": {}
     },
@@ -1340,7 +1325,7 @@
         "kind": 2,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "def normalize_url(url: str) -> str:\n    \"\"\"Ensures a URL has a scheme (defaults to https).\"\"\"\n    parsed = urlparse(url)\n    if not parsed.scheme:\n        return f\"https://{url}\"\n    return url\ndef run_scanners(fetched_data: Dict[str, Any]) -> List[Dict[str, Any]]:\n    \"\"\"Runs all individual scanners and returns a combined list of anomalies.\"\"\"\n    anomalies = []\n    # Run each scanner and extend the main anomalies list.",
+        "peekOfCode": "def normalize_url(url: str) -> str:\n    \"\"\"Ensures a URL has a scheme (defaults to https).\"\"\"\n    parsed = urlparse(url)\n    if not parsed.scheme:\n        return f\"https://{url}\"\n    return url\ndef run_scanners(fetched_data: Dict[str, Any]) -> List[Dict[str, Any]]:\n    \"\"\"Runs all individual scanners and returns a combined list of anomalies.\"\"\"\n    anomalies = []\n    security_results = SecurityChecker.check_security(fetched_data[\"headers\"])",
         "detail": "Backend.app.main",
         "documentation": {}
     },
@@ -1349,7 +1334,7 @@
         "kind": 2,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "def run_scanners(fetched_data: Dict[str, Any]) -> List[Dict[str, Any]]:\n    \"\"\"Runs all individual scanners and returns a combined list of anomalies.\"\"\"\n    anomalies = []\n    # Run each scanner and extend the main anomalies list.\n    security_results = SecurityChecker.check_security(fetched_data[\"headers\"])\n    anomalies.extend(security_results[\"anomalies\"])\n    anomalies.extend(PerformanceMonitor.check_performance(fetched_data[\"response_time\"]))\n    anomalies.extend(MalwareScanner.scan_for_malware(fetched_data[\"html\"]))\n    seo_issues, _ = SEOScanner.scan(fetched_data[\"html\"], fetched_data[\"url\"])\n    anomalies.extend(seo_issues)",
+        "peekOfCode": "def run_scanners(fetched_data: Dict[str, Any]) -> List[Dict[str, Any]]:\n    \"\"\"Runs all individual scanners and returns a combined list of anomalies.\"\"\"\n    anomalies = []\n    security_results = SecurityChecker.check_security(fetched_data[\"headers\"])\n    anomalies.extend(security_results[\"anomalies\"])\n    anomalies.extend(PerformanceMonitor.check_performance(fetched_data[\"response_time\"]))\n    anomalies.extend(MalwareScanner.scan_for_malware(fetched_data[\"html\"]))\n    seo_issues, _ = SEOScanner.scan(fetched_data[\"html\"], fetched_data[\"url\"])\n    anomalies.extend(seo_issues)\n    anomalies.extend(AccessibilityScanner.scan(fetched_data[\"html\"]))",
         "detail": "Backend.app.main",
         "documentation": {}
     },
@@ -1358,7 +1343,7 @@
         "kind": 2,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "def consolidate_anomalies(anomalies: List[Dict[str, Any]]) -> List[Dict[str, Any]]:\n    \"\"\"Groups identical anomaly messages into a single entry with a count.\"\"\"\n    message_counts = {}\n    # Use a list to preserve the original anomaly objects\n    processed_anomalies = []\n    for anomaly in anomalies:\n        msg = anomaly.get(\"message\", \"\")\n        if msg in message_counts:\n            # Increment the count for an existing message\n            message_counts[msg]['count'] += 1",
+        "peekOfCode": "def consolidate_anomalies(anomalies: List[Dict[str, Any]]) -> List[Dict[str, Any]]:\n    \"\"\"Groups identical anomaly messages into a single entry with a count.\"\"\"\n    message_counts = {}\n    processed_anomalies = []\n    for anomaly in anomalies:\n        msg = anomaly.get(\"message\", \"\")\n        if msg in message_counts:\n            message_counts[msg]['count'] += 1\n        else:\n            message_counts[msg] = {\"anomaly\": anomaly, \"count\": 1}",
         "detail": "Backend.app.main",
         "documentation": {}
     },
@@ -1376,7 +1361,7 @@
         "kind": 5,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "logger = logging.getLogger(__name__)\n# Windows asyncio policy for compatibility.\nif sys.platform.startswith(\"win\"):\n    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())\napp = FastAPI(\n    title=\"GuardianWeb Health Analyzer\",\n    description=\"An advanced API for comprehensive website health analysis.\",\n    version=\"1.1.0\"\n)\napp.add_middleware(",
+        "peekOfCode": "logger = logging.getLogger(__name__)\nif sys.platform.startswith(\"win\"):\n    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())\napp = FastAPI(\n    title=\"GuardianWeb Health Analyzer\",\n    description=\"An advanced API for comprehensive website health analysis.\",\n    version=\"1.1.0\"\n)\napp.add_middleware(\n    CORSMiddleware,",
         "detail": "Backend.app.main",
         "documentation": {}
     },
@@ -1385,7 +1370,7 @@
         "kind": 5,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "app = FastAPI(\n    title=\"GuardianWeb Health Analyzer\",\n    description=\"An advanced API for comprehensive website health analysis.\",\n    version=\"1.1.0\"\n)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # In production, restrict this to your frontend's domain.\n    allow_credentials=True,\n    allow_methods=[\"*\"],",
+        "peekOfCode": "app = FastAPI(\n    title=\"GuardianWeb Health Analyzer\",\n    description=\"An advanced API for comprehensive website health analysis.\",\n    version=\"1.1.0\"\n)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,\n    allow_methods=[\"*\"],",
         "detail": "Backend.app.main",
         "documentation": {}
     },
@@ -1394,7 +1379,7 @@
         "kind": 5,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "limiter = Limiter(key_func=get_remote_address)\napp.state.limiter = limiter\napp.add_exception_handler(429, _rate_limit_exceeded_handler)\napp.add_middleware(SlowAPIMiddleware)\n# --- Helper Functions for Analysis ---\n# The main logic is broken down into smaller, single-responsibility functions.\ndef normalize_url(url: str) -> str:\n    \"\"\"Ensures a URL has a scheme (defaults to https).\"\"\"\n    parsed = urlparse(url)\n    if not parsed.scheme:",
+        "peekOfCode": "limiter = Limiter(key_func=get_remote_address)\napp.state.limiter = limiter\napp.add_exception_handler(429, _rate_limit_exceeded_handler)\napp.add_middleware(SlowAPIMiddleware)\n# Initialize the AI Assistant once at startup\nai_assistant = AIAssistant()\n# --- Helper Functions for Analysis ---\ndef normalize_url(url: str) -> str:\n    \"\"\"Ensures a URL has a scheme (defaults to https).\"\"\"\n    parsed = urlparse(url)",
         "detail": "Backend.app.main",
         "documentation": {}
     },
@@ -1403,7 +1388,16 @@
         "kind": 5,
         "importPath": "Backend.app.main",
         "description": "Backend.app.main",
-        "peekOfCode": "app.state.limiter = limiter\napp.add_exception_handler(429, _rate_limit_exceeded_handler)\napp.add_middleware(SlowAPIMiddleware)\n# --- Helper Functions for Analysis ---\n# The main logic is broken down into smaller, single-responsibility functions.\ndef normalize_url(url: str) -> str:\n    \"\"\"Ensures a URL has a scheme (defaults to https).\"\"\"\n    parsed = urlparse(url)\n    if not parsed.scheme:\n        return f\"https://{url}\"",
+        "peekOfCode": "app.state.limiter = limiter\napp.add_exception_handler(429, _rate_limit_exceeded_handler)\napp.add_middleware(SlowAPIMiddleware)\n# Initialize the AI Assistant once at startup\nai_assistant = AIAssistant()\n# --- Helper Functions for Analysis ---\ndef normalize_url(url: str) -> str:\n    \"\"\"Ensures a URL has a scheme (defaults to https).\"\"\"\n    parsed = urlparse(url)\n    if not parsed.scheme:",
+        "detail": "Backend.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "ai_assistant",
+        "kind": 5,
+        "importPath": "Backend.app.main",
+        "description": "Backend.app.main",
+        "peekOfCode": "ai_assistant = AIAssistant()\n# --- Helper Functions for Analysis ---\ndef normalize_url(url: str) -> str:\n    \"\"\"Ensures a URL has a scheme (defaults to https).\"\"\"\n    parsed = urlparse(url)\n    if not parsed.scheme:\n        return f\"https://{url}\"\n    return url\ndef run_scanners(fetched_data: Dict[str, Any]) -> List[Dict[str, Any]]:\n    \"\"\"Runs all individual scanners and returns a combined list of anomalies.\"\"\"",
         "detail": "Backend.app.main",
         "documentation": {}
     },
