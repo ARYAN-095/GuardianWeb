@@ -1,65 +1,70 @@
-from app.ml.risk_model import RiskModel
-from typing import List, Dict
-from app.ml.risk_model import predict_risk_score 
+# app/analyzer/utils.py
 
-    
- # app/analyzer/utils.py
+import yaml
+from pathlib import Path
+from typing import List, Dict, Any
 
 class RecommendationEngine:
-    # Full header → (friendly text, config snippet)
-    HEADER_ADVICE = {
-        "Content-Security-Policy": (
-            "Prevent XSS by restricting sources of scripts/styles/etc.",
-            "Content-Security-Policy: default-src 'self';"
-        ),
-        "X-Frame-Options": (
-            "Protect against clickjacking by controlling framing policy.",
-            "X-Frame-Options: DENY"
-        ),
-        "Strict-Transport-Security": (
-            "Enforce HTTPS on all requests to your domain.",
-            "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload"
-        ),
-        "Permissions-Policy": (
-            "Limit which powerful browser features your site can use.",
-            "Permissions-Policy: geolocation=(self), camera=()"
-        ),
-        "X-XSS-Protection": (
-            "Block reflected XSS attacks in legacy browsers.",
-            "X-XSS-Protection: 1; mode=block"
-        ),
-        "X-Content-Type-Options": (
-            "Prevent MIME‑sniffing by enforcing declared content types.",
-            "X-Content-Type-Options: nosniff"
-        ),
-        "Referrer-Policy": (
-            "Control how much referrer information is sent.",
-            "Referrer-Policy: strict-origin-when-cross-origin"
-        )
-    }
+    """
+    A rule-driven engine that provides detailed, structured recommendations
+    based on a knowledge base defined in an external YAML file.
+    """
+    _rules = None
 
-    @staticmethod
-    def generate_recommendations(anomalies):
-        recs = []
-        for a in anomalies:
-            msg = a.get("message", "")
-            # if it's a missing‑header anomaly, pick up its snippet
-            if msg.startswith("Missing ") and msg.endswith(" header"):
-                header = msg.split()[1]  # e.g. "Content-Security-Policy"
-                if header in RecommendationEngine.HEADER_ADVICE:
-                    friendly, snippet = RecommendationEngine.HEADER_ADVICE[header]
-                    recs.append(f"{friendly}  Config snippet: `{snippet}`")
-                    continue
+    @classmethod
+    def _load_rules(cls):
+        """Loads the recommendation rules from the YAML file once."""
+        if cls._rules is None:
+            try:
+                rules_path = Path(__file__).resolve().parent.parent.parent / "recommendations.yml"
+                with open(rules_path, "r") as f:
+                    cls._rules = yaml.safe_load(f)
+            except FileNotFoundError:
+                # In case the file is missing, operate with an empty rule set.
+                cls._rules = {}
+            except Exception as e:
+                # Log this error in a real application
+                print(f"Error loading recommendation rules: {e}")
+                cls._rules = {}
 
-            # otherwise fall back to whatever recommendation text the anomaly carried
-            if a.get("recommendation"):
-                recs.append(a["recommendation"])
+    @classmethod
+    def generate_recommendations(cls, anomalies: List[Dict[str, Any]]) -> List[str]:
+        """
+        Generates a list of recommendations for a given list of anomalies.
+        It prioritizes specific, rule-based advice from the knowledge base
+        and falls back to the default recommendation on the anomaly itself.
+        """
+        cls._load_rules()
+        recommendations = []
+        seen_recommendations = set()
 
-        # dedupe and preserve input order
-        seen = set()
-        final = []
-        for r in recs:
-            if r not in seen:
-                seen.add(r)
-                final.append(r)
-        return final
+        for anomaly in anomalies:
+            recommendation_text = None
+            anomaly_id = anomaly.get("id")
+
+            # 1. Prioritize rule-based advice using the anomaly ID
+            if anomaly_id and anomaly_id in cls._rules:
+                rule = cls._rules[anomaly_id]
+                # Format the structured rule into a user-friendly string
+                rec_parts = [
+                    f"**{rule.get('title', 'Recommendation')}**",
+                    rule.get('description', ''),
+                ]
+                if snippet := rule.get('snippet'):
+                    rec_parts.append(f"Example Fix: `{snippet}`")
+                if link := rule.get('link'):
+                    rec_parts.append(f"Learn more: {link}")
+                
+                recommendation_text = "\n".join(filter(None, rec_parts))
+
+            # 2. Fallback to the default recommendation if no rule is found
+            elif "recommendation" in anomaly:
+                recommendation_text = anomaly["recommendation"]
+
+            # 3. Add to the final list, ensuring no duplicates
+            if recommendation_text and recommendation_text not in seen_recommendations:
+                recommendations.append(recommendation_text)
+                seen_recommendations.add(recommendation_text)
+
+        return recommendations
+

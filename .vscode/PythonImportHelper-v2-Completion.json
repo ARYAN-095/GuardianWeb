@@ -121,14 +121,6 @@
         "documentation": {}
     },
     {
-        "label": "Dict",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
         "label": "List",
         "importPath": "typing",
         "description": "typing",
@@ -137,7 +129,7 @@
         "documentation": {}
     },
     {
-        "label": "Optional",
+        "label": "Dict",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -146,30 +138,6 @@
     },
     {
         "label": "Any",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "Dict",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "List",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "Dict",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -391,6 +359,14 @@
         "documentation": {}
     },
     {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
         "label": "time",
         "kind": 6,
         "isExtraImport": true,
@@ -425,30 +401,6 @@
         "documentation": {}
     },
     {
-        "label": "pipeline",
-        "importPath": "transformers",
-        "description": "transformers",
-        "isExtraImport": true,
-        "detail": "transformers",
-        "documentation": {}
-    },
-    {
-        "label": "ViTForImageClassification",
-        "importPath": "transformers",
-        "description": "transformers",
-        "isExtraImport": true,
-        "detail": "transformers",
-        "documentation": {}
-    },
-    {
-        "label": "ViTFeatureExtractor",
-        "importPath": "transformers",
-        "description": "transformers",
-        "isExtraImport": true,
-        "detail": "transformers",
-        "documentation": {}
-    },
-    {
         "label": "joblib",
         "kind": 6,
         "isExtraImport": true,
@@ -476,101 +428,12 @@
         "documentation": {}
     },
     {
-        "label": "os,",
+        "label": "yaml",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "os.",
-        "description": "os.",
-        "detail": "os.",
-        "documentation": {}
-    },
-    {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "importPath": "datetime",
-        "description": "datetime",
-        "isExtraImport": true,
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "socket,",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "socket.",
-        "description": "socket.",
-        "detail": "socket.",
-        "documentation": {}
-    },
-    {
-        "label": "ThreatIntelScanner",
-        "importPath": "app.analyzer.threat_intel",
-        "description": "app.analyzer.threat_intel",
-        "isExtraImport": true,
-        "detail": "app.analyzer.threat_intel",
-        "documentation": {}
-    },
-    {
-        "label": "compute_threat_score",
-        "importPath": "app.analyzer.threat_intel",
-        "description": "app.analyzer.threat_intel",
-        "isExtraImport": true,
-        "detail": "app.analyzer.threat_intel",
-        "documentation": {}
-    },
-    {
-        "label": "RiskModel",
-        "importPath": "app.ml.risk_model",
-        "description": "app.ml.risk_model",
-        "isExtraImport": true,
-        "detail": "app.ml.risk_model",
-        "documentation": {}
-    },
-    {
-        "label": "predict_risk_score",
-        "importPath": "app.ml.risk_model",
-        "description": "app.ml.risk_model",
-        "isExtraImport": true,
-        "detail": "app.ml.risk_model",
-        "documentation": {}
-    },
-    {
-        "label": "RiskModel",
-        "importPath": "app.ml.risk_model",
-        "description": "app.ml.risk_model",
-        "isExtraImport": true,
-        "detail": "app.ml.risk_model",
+        "importPath": "yaml",
+        "description": "yaml",
+        "detail": "yaml",
         "documentation": {}
     },
     {
@@ -579,6 +442,30 @@
         "description": "motor.motor_asyncio",
         "isExtraImport": true,
         "detail": "motor.motor_asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
         "documentation": {}
     },
     {
@@ -717,6 +604,30 @@
         "description": "fastapi",
         "isExtraImport": true,
         "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "RiskModel",
+        "importPath": "app.ml.risk_model",
+        "description": "app.ml.risk_model",
+        "isExtraImport": true,
+        "detail": "app.ml.risk_model",
+        "documentation": {}
+    },
+    {
+        "label": "ViTForImageClassification",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
+        "label": "ViTFeatureExtractor",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
         "documentation": {}
     },
     {
@@ -1096,24 +1007,6 @@
         "documentation": {}
     },
     {
-        "label": "summarize_anomalies",
-        "kind": 2,
-        "importPath": "Backend.app.analyzer.nlp_utils",
-        "description": "Backend.app.analyzer.nlp_utils",
-        "peekOfCode": "def summarize_anomalies(anomalies: list) -> str:\n    text = \" \".join(anomaly[\"message\"] for anomaly in anomalies if \"message\" in anomaly)\n    if not text:\n        return \"No significant anomalies found.\"\n    # Adjust max_length if text is short\n    input_length = len(text.split())\n    max_length = 100 if input_length > 50 else 12  # Example logic\n    summary = summarizer(text, max_length=max_length, min_length=5, do_sample=False)\n    return summary[0][\"summary_text\"]",
-        "detail": "Backend.app.analyzer.nlp_utils",
-        "documentation": {}
-    },
-    {
-        "label": "summarizer",
-        "kind": 5,
-        "importPath": "Backend.app.analyzer.nlp_utils",
-        "description": "Backend.app.analyzer.nlp_utils",
-        "peekOfCode": "summarizer = pipeline(\"summarization\", model=\"facebook/bart-large-cnn\")\ndef summarize_anomalies(anomalies: list) -> str:\n    text = \" \".join(anomaly[\"message\"] for anomaly in anomalies if \"message\" in anomaly)\n    if not text:\n        return \"No significant anomalies found.\"\n    # Adjust max_length if text is short\n    input_length = len(text.split())\n    max_length = 100 if input_length > 50 else 12  # Example logic\n    summary = summarizer(text, max_length=max_length, min_length=5, do_sample=False)\n    return summary[0][\"summary_text\"]",
-        "detail": "Backend.app.analyzer.nlp_utils",
-        "documentation": {}
-    },
-    {
         "label": "PerformanceMonitor",
         "kind": 6,
         "importPath": "Backend.app.analyzer.performance_monitor",
@@ -1159,38 +1052,11 @@
         "documentation": {}
     },
     {
-        "label": "ThreatIntelScanner",
-        "kind": 6,
-        "importPath": "Backend.app.analyzer.threat_intel",
-        "description": "Backend.app.analyzer.threat_intel",
-        "peekOfCode": "class ThreatIntelScanner:\n    ABUSE_API_KEY = \"f7e4c1f923fcedea0b1aa3cdcaf87fb15052ff1d34731752bfb554c43a330dd13445db97239d780f\"\n    @staticmethod\n    async def check_virustotal(domain: str) -> Dict:\n        \"\"\"Query VirusTotal for domain verdicts with detailed metadata.\"\"\"\n        url = f\"https://www.virustotal.com/api/v3/domains/{domain}\"\n        headers = {\"x-apikey\": VT_API_KEY}\n        try:\n            async with httpx.AsyncClient() as client:\n                resp = await client.get(url, headers=headers, timeout=15.0)",
-        "detail": "Backend.app.analyzer.threat_intel",
-        "documentation": {}
-    },
-    {
-        "label": "compute_threat_score",
-        "kind": 2,
-        "importPath": "Backend.app.analyzer.threat_intel",
-        "description": "Backend.app.analyzer.threat_intel",
-        "peekOfCode": "def compute_threat_score(vt: Dict, abuse: Dict) -> int:\n    \"\"\"\n    Combine VT score (0–100) and AbuseIPDB score (0–100)\n    with a weighted formula: 70% VT, 30% AbuseIPDB.\n    \"\"\"\n    try:\n        return int(vt.get(\"vt_score\", 0) * 0.7 + abuse.get(\"confidenceScore\", 0) * 0.3)\n    except Exception:\n        return 0",
-        "detail": "Backend.app.analyzer.threat_intel",
-        "documentation": {}
-    },
-    {
-        "label": "VT_API_KEY",
-        "kind": 5,
-        "importPath": "Backend.app.analyzer.threat_intel",
-        "description": "Backend.app.analyzer.threat_intel",
-        "peekOfCode": "VT_API_KEY = os.getenv(\"VIRUSTOTAL_API_KEY\")\n# AbuseIPDB key hardcoded below\nclass ThreatIntelScanner:\n    ABUSE_API_KEY = \"f7e4c1f923fcedea0b1aa3cdcaf87fb15052ff1d34731752bfb554c43a330dd13445db97239d780f\"\n    @staticmethod\n    async def check_virustotal(domain: str) -> Dict:\n        \"\"\"Query VirusTotal for domain verdicts with detailed metadata.\"\"\"\n        url = f\"https://www.virustotal.com/api/v3/domains/{domain}\"\n        headers = {\"x-apikey\": VT_API_KEY}\n        try:",
-        "detail": "Backend.app.analyzer.threat_intel",
-        "documentation": {}
-    },
-    {
         "label": "RecommendationEngine",
         "kind": 6,
         "importPath": "Backend.app.analyzer.utils",
         "description": "Backend.app.analyzer.utils",
-        "peekOfCode": "class RecommendationEngine:\n    # Full header → (friendly text, config snippet)\n    HEADER_ADVICE = {\n        \"Content-Security-Policy\": (\n            \"Prevent XSS by restricting sources of scripts/styles/etc.\",\n            \"Content-Security-Policy: default-src 'self';\"\n        ),\n        \"X-Frame-Options\": (\n            \"Protect against clickjacking by controlling framing policy.\",\n            \"X-Frame-Options: DENY\"",
+        "peekOfCode": "class RecommendationEngine:\n    \"\"\"\n    A rule-driven engine that provides detailed, structured recommendations\n    based on a knowledge base defined in an external YAML file.\n    \"\"\"\n    _rules = None\n    @classmethod\n    def _load_rules(cls):\n        \"\"\"Loads the recommendation rules from the YAML file once.\"\"\"\n        if cls._rules is None:",
         "detail": "Backend.app.analyzer.utils",
         "documentation": {}
     },
@@ -1741,6 +1607,42 @@
         "description": "Backend.risk_model",
         "peekOfCode": "rmse = np.sqrt(mse)\nprint(f\"Mean Squared Error: {mse:.2f}\")\nprint(f\"Root Mean Squared Error: {rmse:.2f}\")\n# Save the model to disk\njoblib.dump(model, \"risk_model.pkl\")\nprint(\"Model trained and saved as risk_model.pkl\")",
         "detail": "Backend.risk_model",
+        "documentation": {}
+    },
+    {
+        "label": "_Known",
+        "kind": 6,
+        "importPath": "fronten.node_modules.flatted.python.flatted",
+        "description": "fronten.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0",
+        "detail": "fronten.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_String",
+        "kind": 6,
+        "importPath": "fronten.node_modules.flatted.python.flatted",
+        "description": "fronten.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0\n    for _ in value:\n        keys.append(i)\n        i += 1\n    return keys",
+        "detail": "fronten.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "kind": 2,
+        "importPath": "fronten.node_modules.flatted.python.flatted",
+        "description": "fronten.node_modules.flatted.python.flatted",
+        "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+        "detail": "fronten.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "fronten.node_modules.flatted.python.flatted",
+        "description": "fronten.node_modules.flatted.python.flatted",
+        "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+        "detail": "fronten.node_modules.flatted.python.flatted",
         "documentation": {}
     },
     {

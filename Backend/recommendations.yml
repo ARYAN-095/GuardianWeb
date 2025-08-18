@@ -1,0 +1,33 @@
+# This file contains rule-based advice for specific anomalies.
+# The keys (e.g., SEC_MISSING_CSP) match the 'id' field of the anomalies.
+
+SEC_MISSING_CSP:
+  title: "Implement a Content Security Policy (CSP)"
+  description: "A CSP is a critical security layer that helps prevent Cross-Site Scripting (XSS) and other injection attacks by specifying which sources of content are trusted."
+  snippet: "Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted.cdn.com;"
+  link: "https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"
+
+SEC_MISSING_XFO:
+  title: "Protect Against Clickjacking with X-Frame-Options"
+  description: "This header prevents your site from being embedded in an iframe on other sites, a common technique used in 'clickjacking' attacks."
+  snippet: "X-Frame-Options: DENY"
+  link: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options"
+
+SEC_MISSING_HSTS:
+  title: "Enforce HTTPS with Strict Transport Security (HSTS)"
+  description: "This header tells browsers to only interact with your site using secure HTTPS connections, protecting against protocol downgrade attacks."
+  snippet: "Strict-Transport-Security: max-age=31536000; includeSubDomains"
+  link: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security"
+
+SEO_MISSING_H1:
+  title: "Add a Primary H1 Heading"
+  description: "Every page should have exactly one H1 tag that serves as the main headline. It's a strong signal to search engines about the page's primary topic."
+  snippet: "<h1>Your Main Page Title</h1>"
+  link: "https://moz.com/learn/seo/h1-tag"
+
+ACC_MISSING_ALT:
+  title: "Add Descriptive Alt Text to Images"
+  description: "Alternative text provides a description of an image for screen readers and search engines, making your content more accessible and discoverable."
+  snippet: '<img src="cat.jpg" alt="A fluffy white cat sleeping on a red blanket">'
+  link: "https://www.w3.org/WAI/tutorials/images/decision-tree/"
+
