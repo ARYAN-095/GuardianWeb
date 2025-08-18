@@ -2,12 +2,17 @@
 
 import httpx
 import json
+from dotenv import load_dotenv
 import os
 from typing import List, Dict
 
 # It's a good practice to get the API key from an environment variable.
 # For this example, we will leave it blank as it will be handled by the environment.
-API_KEY = "AIzaSyBTlTXscBzQsA6S4BCnGyVq1d1VezwD1Ok"
+load_dotenv()
+
+API_KEY = os.environ.get("GEMINI_API_KEY", "") 
+if not API_KEY:
+    raise ValueError("❌ GEMINI_API_KEY not found. Did you set it in .env?")
 
 class AIAssistant:
     """

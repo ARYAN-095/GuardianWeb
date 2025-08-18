@@ -511,6 +511,14 @@
         "documentation": {}
     },
     {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
         "label": "RandomForestRegressor",
         "importPath": "sklearn.ensemble",
         "description": "sklearn.ensemble",
@@ -1092,7 +1100,7 @@
         "kind": 5,
         "importPath": "Backend.app.genai.ai_assistant",
         "description": "Backend.app.genai.ai_assistant",
-        "peekOfCode": "API_KEY = \"AIzaSyBTlTXscBzQsA6S4BCnGyVq1d1VezwD1Ok\"\nclass AIAssistant:\n    \"\"\"\n    An assistant that uses the powerful, cloud-based Gemini API to generate\n    high-quality text for summaries and recommendations.\n    \"\"\"\n    def __init__(self, model_name=\"gemini-2.5-flash-preview-05-20\"):\n        self.model_name = model_name\n        self.api_url = f\"https://generativelanguage.googleapis.com/v1beta/models/{self.model_name}:generateContent?key={API_KEY}\"\n    async def _generate_response(self, prompt: str) -> str:",
+        "peekOfCode": "API_KEY = os.environ.get(\"GEMINI_API_KEY\", \"\") \nif not API_KEY:\n    raise ValueError(\"❌ GEMINI_API_KEY not found. Did you set it in .env?\")\nclass AIAssistant:\n    \"\"\"\n    An assistant that uses the powerful, cloud-based Gemini API to generate\n    high-quality text for summaries and recommendations.\n    \"\"\"\n    def __init__(self, model_name=\"gemini-2.5-flash-preview-05-20\"):\n        self.model_name = model_name",
         "detail": "Backend.app.genai.ai_assistant",
         "documentation": {}
     },
